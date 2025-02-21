@@ -191,8 +191,6 @@ export class Client extends EventEmitter {
 		this.UUIDManager.RegisterName("checksum-error@ddnet.tw", NETMSG.System.NETMSG_CHECKSUM_ERROR);
 		this.UUIDManager.RegisterName("redirect@ddnet.org", NETMSG.System.NETMSG_REDIRECT);
 
-		this.UUIDManager.RegisterName("i-am-npm-package@swarfey.gitlab.io", NETMSG.System.NETMSG_I_AM_NPM_PACKAGE);
-
 	}
 
 	private OnEnterGame() {
@@ -498,29 +496,22 @@ export class Client extends EventEmitter {
 						this.receivedSnaps = 0;
 						
 						var info = new MsgPacker(1, true, 1);
-						info.AddString(this.options?.NET_VERSION ? this.options.NET_VERSION : "0.6 626fce9a778df4d4");
+						info.AddString(this.options?.NET_VERSION ? this.options.NET_VERSION : "0.7 802f1be60a05665f");
 						info.AddString(this.options?.password === undefined ? "" : this.options?.password); // password
 
 						var client_version = new MsgPacker(0, true, 1);
-						client_version.AddBuffer(Buffer.from("8c00130484613e478787f672b3835bd4", 'hex'));
+						client_version.AddBuffer(Buffer.from("9c5a0963aaf6983336f856ccc4b6625d", 'hex')); // maybe wrong
 						let randomUuid = randomBytes(16);
 
 						client_version.AddBuffer(randomUuid);
 						if (this.options?.ddnet_version !== undefined) {
 							client_version.AddInt(this.options?.ddnet_version.version);
-							client_version.AddString(`DDNet ${this.options?.ddnet_version.release_version}; https://www.npmjs.com/package/teeworlds/v/${version}`);
+							client_version.AddString(`DDNet ${this.options?.ddnet_version.release_version}`);
 						} else {
 							client_version.AddInt(16050);
-							client_version.AddString(`DDNet 16.5.0; https://www.npmjs.com/package/teeworlds/v/${version}`);
+							client_version.AddString(`DDNet 18.9.1`);
 						}
 		
-						var i_am_npm_package = new MsgPacker(0, true, 1);
-						i_am_npm_package.AddBuffer(this.UUIDManager.LookupType(NETMSG.System.NETMSG_I_AM_NPM_PACKAGE)!.hash);
-									
-						i_am_npm_package.AddString(`https://www.npmjs.com/package/teeworlds/v/${version}`);
-
-
-						this.SendMsgEx([i_am_npm_package, client_version, info])
 					} else if (packet[3] == 0x4) {
 						// disconnected
 						this.State = States.STATE_OFFLINE;
@@ -903,7 +894,7 @@ export class Client extends EventEmitter {
 
 	
 	/** Disconnect the client. */
-	Disconnect() { 
+	disconnect() { 
 		return new Promise((resolve) => {
 			this.SendControlMsg(4).then(() => {
 				resolve(true);
