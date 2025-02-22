@@ -509,7 +509,9 @@ export class Client extends EventEmitter {
 							client_version.AddInt(16050);
 							client_version.AddString(`DDNet 18.9.1`);
 						}
-		
+
+						this.SendMsgEx([client_version, info])
+
 					} else if (packet[3] == 0x4) {
 						// disconnected
 						this.State = States.STATE_OFFLINE;
