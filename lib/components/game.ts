@@ -1,4 +1,3 @@
-
 import { MsgPacker } from "../MsgPacker";
 import { SnapshotItemTypes } from "../enums_types/types";
 import { Client } from "../client";
@@ -93,17 +92,17 @@ export class Game {
 	
 	/** Call a vote for an server option (for example ddnet maps) */
 	callVoteOption(Value: string, Reason: string) { 
-		this.CallVote("option", Value, Reason)
+		this.callVote("option", Value, Reason)
 	}
 	
 	/** Call a vote to kick a player. Requires the player id */
 	callVoteKick(PlayerID: string|number, Reason: string) { 
-		this.CallVote("kick", PlayerID, Reason)
+		this.callVote("kick", PlayerID, Reason)
 	}
 	
 	/** Call a vote to set a player in spectator mode. Requires the player id */
 	callVoteSpectate(PlayerID: string|number, Reason: string) { 
-		this.CallVote("spectate", PlayerID, Reason)
+		this.callVote("spectate", PlayerID, Reason)
 	}
 
 

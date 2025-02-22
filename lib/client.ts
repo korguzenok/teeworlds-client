@@ -412,7 +412,7 @@ export class Client extends EventEmitter {
 	}
 	Flush() {
 		// if (this.queueChunkEx.length == 0)
-		console.log("flushing");
+		// console.log("flushing");
 		this.SendMsgEx(this.queueChunkEx);
 		this.queueChunkEx = [];
 		this.ack = this.lastCheckedChunkAck;
