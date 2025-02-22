@@ -1,4 +1,3 @@
-
 import { Client } from "../client";
 import { EventEmitter } from "stream";
 import { SnapshotItemTypes } from "../enums_types/types";

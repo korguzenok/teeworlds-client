@@ -107,8 +107,4 @@ export class Rcon extends EventEmitter {
 		}
 		return true;
 	}
-
-	
-
-
 }
